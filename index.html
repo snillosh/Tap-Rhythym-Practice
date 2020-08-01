@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>ToneJS and NexusUI</title>
+        <meta name="author" content="Bevan Salter" />
+        <meta name="date" content="July 22nd 2019" />
+        
+        <script src="js/unmute-v013.js" data-add-button="true"></script>
+        <script src="js/tone-v13.js"></script>
+        <script src="js/nexusUI-v1.js"></script>
+        <script src="js/oscilloscope.js"></script>
+        
+        
+        <style>
+            body, html {
+                width: 100%;
+                height: 100%;
+            }
+        
+        p#description {
+            background-color: rgb(200,200,200);
+            font-family: sans-serif;
+        }
+        
+        div#controlsArea {
+            margin-top: 5%;
+            margin-left: 10%;
+            width: 90%;
+            height: 70%;
+        }
+        
+        
+        
+        canvas[nx="button"] {
+            height: 100%;
+            width: 10%;
+        }
+        
+        
+            </style>
+        
+    </head>
+    <body id="mainBody" width="100%" height="100%">
+        
+        <p id="description">Tap Rhythym Practice
+        </p>
+        
+        <div id="controlsArea">
+            <canvas nx="button" label="Kick"></canvas>
+            <canvas nx="button" label="Snare"></canvas>
+            <canvas nx="button" label="Tom"></canvas>
+            <canvas nx="button" label="Closed Hat"></canvas>
+            <canvas nx="button" label="Open Hat"></canvas>
+            <canvas nx="button" label="Cymbol"></canvas>
+            
+        </div>
+        
+        <script>
+            // load and configure the ToneJS sample player
+            var sound1 = new Tone.Player("sound1.wav");
+            var sound2 = new Tone.Player("sound2.wav");
+            var sound3 = new Tone.Player("sound3.wav");
+            var sound4 = new Tone.Player("sound4.wav");
+            var sound5 = new Tone.Player("sound5.wav");
+            var sound6 = new Tone.Player("sound6.wav");
+            //jimmy.loop = true;
+            //jimmy.connect(Tone.Master);
+            
+            // when the nexus UI system loads we call this function
+            nx.onload = function() {
+                
+                button1.on("*", drumActions);
+                button2.on("*", drumActions);
+                button3.on("*", drumActions);
+                button4.on("*", drumActions);
+                button5.on("*", drumActions);
+                button6.on("*", drumActions);
+            }
+        
+        // callback for actions on the vinyl control
+        var drumActions = function(event){
+            console.log("Button was clicked");
+            sound1.fan(Tone.Master);
+        }
+        var osc = new Tone.Oscillator({
+                                      "frequency" : 440,
+                                      "volume" : -10
+                                      });
+                                      
+                                      var waveformAnalyser = new Tone.Analyser("waveform", 1024);
+                                      
+                                      osc.connect(waveformAnalyser);
+                                      
+                                      oscilloscope.setup(waveformAnalyser);
+            </script>
+        
+    </body>
+</html>
+
+
